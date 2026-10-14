@@ -17,8 +17,6 @@ public class ArrayDinamico {
     }
 
     public Estudiante creaObjeto() {
-        Estudiante est = new Estudiante();
-
         // Numero de control: obligatorio, alfanumerico y sin repetirse
         String numControl;
         while (true) {
@@ -28,24 +26,22 @@ public class ArrayDinamico {
             }
             TJOption.imprimeError("Ya existe un estudiante con ese número de control.");
         }
-        est.setNumeroDeControl(numControl);
 
-        est.setNombre(TJOption.leerNombre("Nombre"));
-        est.setCalificacion(TJOption.leerDoubleRango("Promedio",
-                Estudiante.CAL_MIN, Estudiante.CAL_MAX));
-        return est;
+        String nombre = TJOption.leerNombre("Nombre");
+        return new Estudiante(nombre, numControl);
     }
 
     public void addObjeto() {
         dato.add(creaObjeto());
     }
 
+    // Ordena alfabeticamente por nombre (burbuja); antes era por promedio
     public void ordenaObjetoBurbuja() {
         byte i, j;
         Estudiante aux;
         for (i = 0; i < dato.size(); i++)
             for (j = (byte) (i + 1); j < dato.size(); j++) {
-                if (dato.get(i).getPromedio() > dato.get(j).getPromedio()) {
+                if (dato.get(i).getNombre().compareToIgnoreCase(dato.get(j).getNombre()) > 0) {
                     aux = dato.get(i);
                     dato.set(i, dato.get(j));
                     dato.set(j, aux);

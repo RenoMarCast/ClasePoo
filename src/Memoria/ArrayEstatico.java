@@ -12,7 +12,6 @@ public class ArrayEstatico {
         pos = -1;
     }
 
-    // Metodo que valida si el array esta vacio
     public boolean empty() {
         return pos == -1;
     }
@@ -21,58 +20,39 @@ public class ArrayEstatico {
         return pos == datosEstudiante.length - 1;
     }
 
-    public Estudiante creaObjeto() {
-        Estudiante est = new Estudiante();
-
-        // Numero de control: obligatorio, alfanumerico y sin repetirse
-        String numControl;
-        while (true) {
-            numControl = TJOption.leerAlfanumerico("Ingrese el numero de control: ");
-            if (busSecuencial(numControl) == -2) {
-                break;
-            }
-            TJOption.imprimeError("Ya existe un estudiante con ese número de control.");
-        }
-        est.setNumeroDeControl(numControl);
-
-        est.setNombre(TJOption.leerNombre("Ingrese el nombre del estudiante: "));
-        est.setCalificacion(TJOption.leerDoubleRango("Ingrese el promedio: ",
-                Estudiante.CAL_MIN, Estudiante.CAL_MAX));
-        return est;
+    public byte total() {
+        return (byte) (pos + 1);
     }
 
-    public void addOjeto() {
+    // Recibe un estudiante que ya existe y guarda su referencia
+    public void addObjeto(Estudiante est) {
         if (!full()) {
-            // si hay espacio
-            datosEstudiante[pos + 1] = creaObjeto();
+            datosEstudiante[pos + 1] = est;
             pos++;
         } else {
             TJOption.imprimeError("No hay espacio en el array");
         }
     }
 
-    public void verObjetos() {
+    // Arma el texto con los estudiantes guardados
+    public String listado() {
         StringBuilder unir = new StringBuilder();
         for (byte j = 0; j <= pos; j++) {
             unir.append("[").append(j).append("] ")
                     .append(datosEstudiante[j]).append("\n");
         }
-        TJOption.imprimirDatos("Datos capturados \n" + unir);
+        return unir.toString();
     }
 
-    // Ordena de menor a mayor promedio (burbuja)
-    public void ordenObjetos() {
-        Estudiante aux;
-        for (byte i = 0; i < pos; i++) {
-            for (byte j = 0; j < pos - i; j++) {
-                if (datosEstudiante[j].getPromedio() > datosEstudiante[j + 1].getPromedio()) {
-                    aux = datosEstudiante[j];
-                    datosEstudiante[j] = datosEstudiante[j + 1];
-                    datosEstudiante[j + 1] = aux;
-                }
-            }
-        }
+    public void verObjetos() {
+        TJOption.imprimirDatos("Datos capturados \n" + listado());
     }
+
+    /* Comentado porque ya no se usa (el estudiante se crea fuera del array
+       y ya no tiene promedio):
+    public Estudiante creaObjeto() { ... }
+    public void ordenObjetos() { ... }
+    */
 
     public Estudiante getEstudiante(byte posicion) {
         return datosEstudiante[posicion];
