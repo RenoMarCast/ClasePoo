@@ -1,50 +1,46 @@
 package TDA;
 
+// Representa a un estudiante. Existe por su cuenta, no depende del vehiculo ni del estacionamiento.
 public class Estudiante {
-    // public static final double CAL_MIN = 0;    // ya no se usa
-    // public static final double CAL_MAX = 100;  // ya no se usa
+    // Identifican al estudiante (los pide el diagrama)
+    private String numeroControl;
+    private String nombreCompleto;
 
-    private String nombre;
-    private String numeroDeControl;
-    // private double promedio;                   // ya no se usa
-
-    public Estudiante(String nombre, String numeroDeControl) {
-        setNombre(nombre);
-        setNumeroDeControl(numeroDeControl);
+    // Constructor: recibe los datos al crear el estudiante y los guarda usando los setters
+    public Estudiante(String numeroControl, String nombreCompleto) {
+        setNumeroControl(numeroControl);
+        setNombreCompleto(nombreCompleto);
     }
 
-    /* Comentado porque ya no se usa:
-    public Estudiante() { ... }
-    public Estudiante(String nombre, String numeroDeControl, double promedio) { ... }
-    public void setCalificacion(double promedio) { ... }
-    public double getPromedio() { ... }
-    */
-
-    public void setNombre(String nombre) {
-        if (nombre == null || nombre.isBlank()) {
-            throw new IllegalArgumentException("El nombre no puede estar vacío.");
-        }
-        this.nombre = nombre.trim();
-    }
-
-    public void setNumeroDeControl(String numeroDeControl) {
-        if (numeroDeControl == null || numeroDeControl.isBlank()) {
+    // Guarda el numero de control, validando que no venga vacio
+    public void setNumeroControl(String numeroControl) {
+        if (numeroControl == null || numeroControl.isBlank()) {
             throw new IllegalArgumentException("El número de control no puede estar vacío.");
         }
-        this.numeroDeControl = numeroDeControl.trim();
+        this.numeroControl = numeroControl.trim();   // trim quita espacios sobrantes
     }
 
-    public String getNombre() {
-        return nombre;
+    // Guarda el nombre completo, validando que no venga vacio
+    public void setNombreCompleto(String nombreCompleto) {
+        if (nombreCompleto == null || nombreCompleto.isBlank()) {
+            throw new IllegalArgumentException("El nombre completo no puede estar vacío.");
+        }
+        this.nombreCompleto = nombreCompleto.trim();
     }
 
-    public String getNumeroDeControl() {
-        return numeroDeControl;
+    // Getters: permiten leer los atributos privados desde otras clases
+    public String getNumeroControl() {
+        return numeroControl;
     }
 
+    public String getNombreCompleto() {
+        return nombreCompleto;
+    }
+
+    // Convierte el objeto a texto para poder imprimirlo
     @Override
     public String toString() {
-        return "Estudiante{numControl='" + numeroDeControl + '\'' +
-                ", nombre='" + nombre + '\'' + '}';
+        return "Estudiante{numControl='" + numeroControl + '\'' +
+                ", nombreCompleto='" + nombreCompleto + '\'' + '}';
     }
 }
