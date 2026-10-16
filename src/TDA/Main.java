@@ -5,58 +5,61 @@ import Tools.TJOption;
 // Clase principal: muestra el menu y conecta al usuario con las demas clases
 public class Main {
 
-    // Punto de entrada del programa; solo llama al menu
     public static void main(String[] args) {
         menu();
     }
 
     public static void menu() {
-        Estacionamiento estacionamiento = null;   // empieza en null porque aun no se ha creado
+        Estacionamiento estacionamiento = null;   // null porque aun no se ha creado
         String opcion;
         do {
-            // Muestra la lista desplegable con las opciones del menu
             opcion = TJOption.listaDesplegable(
                     "Crear estacionamiento,Agregar vehiculos al estacionamiento,Imprimir datos del estacionamiento,Salir");
             switch (opcion) {
 
-                // a) Crea el estacionamiento con el nombre que escriba el usuario
+                // a) Crea el estacionamiento
                 case "Crear estacionamiento":
                     String nombreEst = TJOption.leerString("Nombre del estacionamiento");
                     estacionamiento = new Estacionamiento(nombreEst);
                     TJOption.imprimirDatos("Estacionamiento creado correctamente.");
                     break;
 
-                // b) Captura estudiante y vehiculo, y mete el vehiculo al estacionamiento
+                // b) Captura estudiante y auto, y agrega el auto al estacionamiento
                 case "Agregar vehiculos al estacionamiento":
                     if (estacionamiento == null) {
-                        // Validacion: no se puede agregar si no existe el estacionamiento
                         TJOption.imprimeError("Primero debes crear el estacionamiento");
                     } else if (estacionamiento.full()) {
                         TJOption.imprimeError("El estacionamiento ya esta lleno");
                     } else {
                         byte otro;
                         do {
-                            // 1) El estudiante se crea por su cuenta, antes que el vehiculo
+                            // 1) Placa primero: si esta repetida, solo se vuelve a pedir la placa
+                            String placa;
+                            while (true) {
+                                placa = TJOption.leerAlfanumerico("Placa del vehiculo");
+                                if (estacionamiento.existePlaca(placa)) {
+                                    TJOption.imprimeError("Ya existe un auto con esa placa");
+                                } else {
+                                    break;   // placa valida, sale del ciclo
+                                }
+                            }
+
+                            // 2) El estudiante se crea por su cuenta
                             String numControl = TJOption.leerAlfanumerico("Numero de control del estudiante");
                             String nombreCompleto = TJOption.leerNombre("Nombre completo del estudiante");
                             Estudiante est = new Estudiante(numControl, nombreCompleto);
 
-                            // 2) El vehiculo se crea y guarda la referencia a su estudiante
-                            String placa = TJOption.leerAlfanumerico("Placa del vehiculo");
+                            // 3) El auto se crea con la referencia a su estudiante
                             String marca = TJOption.leerString("Marca del vehiculo");
                             String modelo = TJOption.leerString("Modelo del vehiculo");
-                            Vehiculo v = new Vehiculo(placa, marca, modelo, est);
+                            Auto auto = new Auto(placa, marca, modelo, est);
 
-                            // 3) El estacionamiento solo agrega la referencia del vehiculo.
-                            // try-catch atrapa los errores (lleno o placa repetida) y los muestra
-                            try {
-                                estacionamiento.agregarVehiculo(v);
+                            // 4) El estacionamiento agrega la referencia del auto
+                            if (estacionamiento.agregarAuto(auto)) {
                                 TJOption.imprimirDatos("Vehiculo agregado correctamente.");
-                            } catch (IllegalArgumentException | IllegalStateException e) {
-                                TJOption.imprimeError(e.getMessage());
                             }
 
-                            // Si se llego a 10 vehiculos se detiene; si no, pregunta si agrega otro
+                            // Si se lleno se detiene; si no, pregunta si agrega otro
                             if (estacionamiento.full()) {
                                 TJOption.imprimirDatos("El estacionamiento llego al maximo de 10 vehiculos");
                                 otro = 1;   // fuerza la salida del ciclo
@@ -67,7 +70,7 @@ public class Main {
                     }
                     break;
 
-                // c) Muestra el nombre, cuantos vehiculos hay y la lista completa
+                // c) Imprime los datos del estacionamiento
                 case "Imprimir datos del estacionamiento":
                     if (estacionamiento == null) {
                         TJOption.imprimeError("Primero debes crear el estacionamiento");
@@ -81,6 +84,6 @@ public class Main {
                     TJOption.imprimirDatos("Programa finalizado");
                     break;
             }
-        } while (!opcion.equals("Salir"));   // el menu se repite hasta elegir Salir
+        } while (!opcion.equals("Salir"));
     }
 }

@@ -1,31 +1,23 @@
 package TDA;
 
-// Representa a un estudiante. Existe por su cuenta, no depende del vehiculo ni del estacionamiento.
+// Representa a un estudiante. Existe por su cuenta, no depende del auto ni del estacionamiento.
 public class Estudiante {
-    // Identifican al estudiante (los pide el diagrama)
     private String numeroControl;
     private String nombreCompleto;
 
-    // Constructor: recibe los datos al crear el estudiante y los guarda usando los setters
+    // Constructor con todos los parametros (orden que marca el diagrama)
     public Estudiante(String numeroControl, String nombreCompleto) {
-        setNumeroControl(numeroControl);
-        setNombreCompleto(nombreCompleto);
+        this.numeroControl = numeroControl;
+        this.nombreCompleto = nombreCompleto;
     }
 
-    // Guarda el numero de control, validando que no venga vacio
+    // Setters: guardan el dato en el atributo
     public void setNumeroControl(String numeroControl) {
-        if (numeroControl == null || numeroControl.isBlank()) {
-            throw new IllegalArgumentException("El número de control no puede estar vacío.");
-        }
-        this.numeroControl = numeroControl.trim();   // trim quita espacios sobrantes
+        this.numeroControl = numeroControl;
     }
 
-    // Guarda el nombre completo, validando que no venga vacio
     public void setNombreCompleto(String nombreCompleto) {
-        if (nombreCompleto == null || nombreCompleto.isBlank()) {
-            throw new IllegalArgumentException("El nombre completo no puede estar vacío.");
-        }
-        this.nombreCompleto = nombreCompleto.trim();
+        this.nombreCompleto = nombreCompleto;
     }
 
     // Getters: permiten leer los atributos privados desde otras clases

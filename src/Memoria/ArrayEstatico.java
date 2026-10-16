@@ -1,65 +1,65 @@
 package Memoria;
 
-import TDA.Vehiculo;
+import TDA.Auto;
 import Tools.TJOption;
 
-// Tipo de memoria estatica: un arreglo de tamano fijo para guardar vehiculos.
-// Se usa porque el ejercicio dice que el limite es de 10 vehiculos.
+// Memoria estatica: arreglo de tamano fijo para guardar autos (limite de 10 por el ejercicio).
 public class ArrayEstatico {
-    private Vehiculo datosVehiculo[];   // arreglo que guarda las referencias a los vehiculos
-    private byte pos;                   // posicion del ultimo vehiculo guardado (-1 = vacio)
+    private Auto datosAuto[];   // guarda las referencias a los autos
+    private byte pos;           // posicion del ultimo auto guardado (-1 = vacio)
 
     // Crea el arreglo con el tamano indicado y lo deja vacio
     public ArrayEstatico(byte tam) {
-        datosVehiculo = new Vehiculo[tam];
+        datosAuto = new Auto[tam];
         pos = -1;
     }
 
-    // Indica si no hay ningun vehiculo guardado
+    // Indica si no hay ningun auto guardado
     public boolean empty() {
         return pos == -1;
     }
 
-    // Indica si ya no caben mas vehiculos
+    // Indica si ya no caben mas autos
     public boolean full() {
-        return pos == datosVehiculo.length - 1;
+        return pos == datosAuto.length - 1;
     }
 
-    // Devuelve cuantos vehiculos hay guardados
+    // Devuelve cuantos autos hay guardados
     public byte total() {
         return (byte) (pos + 1);
     }
 
-    // Guarda la referencia de un vehiculo ya creado, si todavia hay espacio
-    public void addObjeto(Vehiculo v) {
+    // Guarda la referencia de un auto ya creado, si todavia hay espacio
+    public void addObjeto(Auto a) {
         if (!full()) {
-            datosVehiculo[pos + 1] = v;
+            datosAuto[pos + 1] = a;
             pos++;
         } else {
             TJOption.imprimeError("No hay espacio en el array");
         }
     }
 
-    // Arma un texto con todos los vehiculos guardados, uno por linea y numerados
+    // Arma el texto con los autos guardados, uno por linea
     public String listado() {
         StringBuilder unir = new StringBuilder();
         for (byte j = 0; j <= pos; j++) {
-            unir.append("[").append(j + 1).append("] ")
-                    .append(datosVehiculo[j]).append("\n");
+            unir.append("[").append(j).append("] ")
+                    .append(datosAuto[j]).append("\n");
         }
         return unir.toString();
     }
 
-    // Devuelve el vehiculo que esta en la posicion indicada
-    public Vehiculo getVehiculo(byte posicion) {
-        return datosVehiculo[posicion];
+    // Devuelve el auto de la posicion indicada
+    public Auto getAuto(byte posicion) {
+        return datosAuto[posicion];
     }
 
-    // Busqueda secuencial: recorre el arreglo buscando una placa.
-    // Devuelve la posicion si la encuentra, o -2 si no existe.
+    // Busqueda secuencial por placa: devuelve la posicion o -2 si no existe.
+    // equalsIgnoreCase compara sin importar mayusculas o minusculas (abc123 = ABC123)
     public byte busSecuencial(String placa) {
-        for (byte j = 0; j <= pos; j++) {
-            if (placa.equalsIgnoreCase(datosVehiculo[j].getPlaca())) {
+        byte j;
+        for (j = 0; j <= pos; j++) {
+            if (placa.equalsIgnoreCase(datosAuto[j].getPlaca())) {
                 return j;
             }
         }
