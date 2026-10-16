@@ -1,6 +1,5 @@
 package TDA;
 
-// Representa un auto (el "Vehiculo" del diagrama). Guarda una referencia al estudiante responsable.
 public class Auto {
     private String placa;
     private String marca;

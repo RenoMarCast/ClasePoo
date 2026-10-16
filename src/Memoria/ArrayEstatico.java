@@ -3,7 +3,6 @@ package Memoria;
 import TDA.Auto;
 import Tools.TJOption;
 
-// Memoria estatica: arreglo de tamano fijo para guardar autos (limite de 10 por el ejercicio).
 public class ArrayEstatico {
     private Auto datosAuto[];   // guarda las referencias a los autos
     private byte pos;           // posicion del ultimo auto guardado (-1 = vacio)

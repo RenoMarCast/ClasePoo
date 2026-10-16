@@ -1,6 +1,5 @@
 package TDA;
 
-// Representa a un estudiante. Existe por su cuenta, no depende del auto ni del estacionamiento.
 public class Estudiante {
     private String numeroControl;
     private String nombreCompleto;

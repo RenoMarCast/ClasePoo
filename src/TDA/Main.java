@@ -2,7 +2,6 @@ package TDA;
 
 import Tools.TJOption;
 
-// Clase principal: muestra el menu y conecta al usuario con las demas clases
 public class Main {
 
     public static void main(String[] args) {
